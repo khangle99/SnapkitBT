@@ -1,12 +1,12 @@
 import UIKit
-
+import Nuke
 class CharacterDetailViewController: UIViewController {
     
     let character: ToonCharacter
     let avartarImageView = UIImageView.rounded(size: CGSize(width: 200, height: 200))
     let titleLabel = UILabel()
     let descriptionLabel = UILabel()
-    
+
     init(character: ToonCharacter) {
         self.character = character
         super.init(nibName: nil, bundle: nil)
@@ -23,7 +23,7 @@ class CharacterDetailViewController: UIViewController {
     }
     
     private func loadCharacter() {
-        avartarImageView.load(urlString: character.avartarUrl)
+        avartarImageView.loadImageFromUrl(urlString: character.avartarUrl)
         titleLabel.text = character.name
         descriptionLabel.text = character.description
     }

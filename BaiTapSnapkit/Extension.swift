@@ -1,23 +1,7 @@
 import Foundation
 import UIKit
+import Nuke
 extension UIImageView {
-    func load(urlString: String) {
-        DispatchQueue.global().async { [weak self] in
-            if let url = URL(string: urlString) {
-                if let data = try? Data(contentsOf: url),let image = UIImage(data: data) {
-                        DispatchQueue.main.async {
-                            self?.image = image
-                        }
-                }
-            } else {
-                DispatchQueue.main.async {
-                    self?.image = UIImage(named: "errorImage")
-                }
-            }
-           
-        }
-    }
-    
     static func rounded(size: CGSize)-> UIImageView {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
@@ -29,8 +13,18 @@ extension UIImageView {
         imageView.clipsToBounds = true
         return imageView
     }
-    
-  
+    var options: ImageLoadingOptions {
+        var option = ImageLoadingOptions(
+            placeholder: UIImage(named: "errorImage"),
+            transition: .fadeIn(duration: 0.33)
+        )
+      return option
+    }
+    func loadImageFromUrl(urlString: String) {
+        if let url = URL(string: urlString) {
+            Nuke.loadImage(with: url, options: options, into: self)
+        }
+    }
 }
 
 extension UIImage {

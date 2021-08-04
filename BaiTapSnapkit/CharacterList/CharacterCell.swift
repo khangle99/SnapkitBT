@@ -5,10 +5,7 @@ class CharacterCell: UITableViewCell {
     private let titleLabel = UILabel()
     private let descriptionLabel = UILabel()
     private let avartarImageView = UIImageView.rounded(size: CGSize(width: 100, height: 100))
-    private let options = ImageLoadingOptions(
-        placeholder: UIImage(named: "errorImage"),
-        transition: .fadeIn(duration: 0.33)
-    )
+
     override func layoutSubviews() {
         super.layoutSubviews()
         self.layoutMargins = UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8)
@@ -67,9 +64,7 @@ class CharacterCell: UITableViewCell {
     func configureWith(_ character: ToonCharacter) {
         titleLabel.text = character.name
         descriptionLabel.text = character.description
-        if let url = URL(string: character.avartarUrl) {
-            Nuke.loadImage(with: url, options: options, into: avartarImageView)
-        }
+        avartarImageView.loadImageFromUrl(urlString: character.avartarUrl)
         layoutIfNeeded()
     }
 }
